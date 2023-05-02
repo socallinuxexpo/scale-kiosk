@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, ... }:
 {
   imports = [ ./kiosk.nix ];
   environment.systemPackages = with pkgs; [ vim git ];
@@ -9,16 +9,6 @@
       password = "myPassword";
       isNormalUser = true;
       extraGroups = [ "wheel" ];
-    };
-  };
-  networking = {
-    interfaces."wlan0".useDHCP = true;
-    wireless = {
-      interfaces = [ "wlan0" ];
-      enable = true;
-      networks = {
-        PacGreen.psk = "pacgreen";
-      };
     };
   };
 }
