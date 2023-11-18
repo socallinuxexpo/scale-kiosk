@@ -63,3 +63,18 @@ arm64 machine for every package/derivation that needs to be compiled. Binfmt is
 a kernel feature that will allows programs like QEMU to be span up whenever any
 program tries to spawn a process for a foreign architecture.
 
+## Update Raspberry pi
+
+Build and copy the following drv results to the first partion on rpi formatted sdcard
+
+```
+nix build .#build-eeprom -L
+```
+
+The next boot it will update the firmware
+
+### Ref
+
+1. https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#eeprom-update-files
+
+###
