@@ -3,12 +3,7 @@ let
   mouseUrl = "https://google.com";
   regularUrl = "https://duckduckgo.com";
   kioskProgram = pkgs.writeShellScript "kiosk.sh" ''
-    if [ -e /sys/class/input/mouse0 ]
-    then
-      ${lib.getExe pkgs.chromium} --ozone-platform=wayland --start-maximized --kiosk ${mouseUrl}
-    else
-      ${lib.getExe pkgs.chromium} --ozone-platform=wayland --start-maximized --kiosk ${regularUrl}
-    fi
+    MOZ_ENABLE_WAYLAND=1 ${lib.getExe pkgs.firefox}
   '';
 in
 {
