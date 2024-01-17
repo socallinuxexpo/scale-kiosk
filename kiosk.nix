@@ -3,6 +3,7 @@ let
   mouseUrl = "https://google.com";
   regularUrl = "https://duckduckgo.com";
   kioskProgram = pkgs.writeShellScript "kiosk.sh" ''
+    cd /home/kiosk
     MOZ_ENABLE_WAYLAND=1 ${lib.getExe pkgs.firefox}
   '';
 in
@@ -14,7 +15,7 @@ in
     extraGroups = [ "wheel" ];
   };
   services.cage = {
-    enable = false;
+    enable = true;
     user = "kiosk";
     program = kioskProgram;
   };
