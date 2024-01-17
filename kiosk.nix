@@ -6,7 +6,8 @@ let
     MOZ_ENABLE_WAYLAND=1 ${lib.getExe pkgs.firefox}
   '';
 in
-{
+  {
+  services.getty.autologinUser = "kiosk";
   users.users.kiosk = {
     isNormalUser = true;
     password = "changeme";
