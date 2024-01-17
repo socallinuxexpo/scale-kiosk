@@ -14,7 +14,7 @@ in
     extraGroups = [ "wheel" ];
   };
   services.cage = {
-    enable = true;
+    enable = false;
     user = "kiosk";
     program = kioskProgram;
   };
