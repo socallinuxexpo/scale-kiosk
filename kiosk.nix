@@ -7,7 +7,8 @@ let
   '';
 in
   {
-  services.getty.autologinUser = "kiosk";
+    services.getty.autologinUser = "kiosk";
+    systemd.services."cage-tty1".serviceConfig.WorkingDirectory = lib.mkForce "/home/kiosk";
   users.users.kiosk = {
     isNormalUser = true;
     password = "changeme";
