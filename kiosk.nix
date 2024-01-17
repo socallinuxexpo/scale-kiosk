@@ -5,9 +5,9 @@ let
   kioskProgram = pkgs.writeShellScript "kiosk.sh" ''
     if [ -e /sys/class/input/mouse0 ]
     then
-      ${lib.getExe pkgs.chromium} --disable-infobars --start-maximized --kiosk ${mouseUrl}
+      ${lib.getExe pkgs.chromium} --ozone-platform=wayland --start-maximized --kiosk ${mouseUrl}
     else
-      ${lib.getExe pkgs.chromium} --disable-infobars --start-maximized --kiosk ${regularUrl}
+      ${lib.getExe pkgs.chromium} --ozone-platform=wayland --start-maximized --kiosk ${regularUrl}
     fi
   '';
 in
