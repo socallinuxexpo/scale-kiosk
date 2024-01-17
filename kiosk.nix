@@ -4,12 +4,17 @@ let
   regularUrl = "http://signs.scale.lan/";
   kioskProgram = pkgs.writeShellScript "kiosk.sh" ''
     cd /home/kiosk
-    if [ -e /sys/class/input/mouse0 ]
-    then
-      ${lib.getExe pkgs.chromium} --ozone-platform=wayland --disable-popup-blocking --disable-throttle-non-visible-cross-origin-iframes --incognito --start-maximized --kiosk ${mouseUrl}
-    else
-      ${lib.getExe pkgs.chromium} --ozone-platform=wayland --incognito --start-maximized --kiosk ${regularUrl}
-    fi
+    # account for ALT+F4 closing window in wayland
+    while true
+    do
+      if [ -e /sys/class/input/mouse0 ]
+      then
+        # required cross-origin-iframe and popup blocking flags due to iframe
+        ${lib.getExe pkgs.chromium} --ozone-platform=wayland --disable-popup-blocking --disable-throttle-non-visible-cross-origin-iframes --incognito --start-maximized --kiosk ${mouseUrl}
+      else
+        ${lib.getExe pkgs.chromium} --ozone-platform=wayland --incognito --start-maximized --kiosk ${regularUrl}
+      fi
+    done
   '';
 in
 {
