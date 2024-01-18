@@ -10,7 +10,7 @@ let
       if [ -e /sys/class/input/mouse0 ]
       then
         # required cross-origin-iframe and popup blocking flags due to iframe
-        ${lib.getExe pkgs.chromium} --ozone-platform=wayland --disable-popup-blocking --disable-throttle-non-visible-cross-origin-iframes --incognito --start-maximized --in-process-gpu --disable-extensions --kiosk ${mouseUrl}
+        MOZ_ENABLE_WAYLAND=1 ${lib.getExe pkgs.firefox} -kiosk -private-window ${mouseUrl}
       else
         ${lib.getExe pkgs.chromium} --ozone-platform=wayland --incognito --start-maximized --in-process-gpu --kiosk ${regularUrl}
       fi
