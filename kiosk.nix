@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 let
   mouseUrl = "https://register.socallinuxexpo.org/reg6/kiosk/";
   regularUrl = "http://signs.scale.lan/";
@@ -24,6 +24,38 @@ in
     password = "changeme";
     extraGroups = [ "wheel" ];
   };
+
+  systemd.services."cage-tty1".serviceConfig =
+  let
+    cfg = config.services.cage;
+  in
+  lib.mkForce { 
+        ExecStart = ''
+          ${pkgs.cage}/bin/cage \
+            -- ${cfg.program}
+        '';
+        User = cfg.user;
+
+        IgnoreSIGPIPE = "no";
+
+        # Log this user with utmp, letting it show up with commands 'w' and
+        # 'who'. This is needed since we replace (a)getty.
+        UtmpIdentifier = "%I";
+        UtmpMode = "user";
+        # A virtual terminal is needed.
+        TTYPath = "/dev/tty1";
+        TTYReset = "yes";
+        TTYVHangup = "yes";
+        TTYVTDisallocate = "yes";
+        # Fail to start if not controlling the virtual terminal.
+        StandardInput = "tty-fail";
+        StandardOutput = "journal";
+        StandardError = "journal";
+        # Set up a full (custom) user session for the user, required by Cage.
+        PAMName = "cage";
+      };
+    
+
   services.cage = {
     enable = true;
     user = "kiosk";
