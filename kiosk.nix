@@ -18,7 +18,7 @@ let
   '';
 in
   {
-  services.getty.autologinUser = "kiosk";
+  services.getty.autologinUser = lib.mkForce "kiosk";
   users.users.kiosk = {
     isNormalUser = true;
     password = "changeme";
