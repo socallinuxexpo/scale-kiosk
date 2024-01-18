@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   imports = [ ./kiosk.nix ];
-  environment.systemPackages = with pkgs; [ vim git ];
+  environment.systemPackages = with pkgs; [ vim git seatd ];
   services.openssh.enable = true;
   networking.hostName = "pi";
   users = {
