@@ -29,6 +29,7 @@
           pi-kiosk = nixpkgs.lib.nixosSystem {
             system = "aarch64-linux";
             modules = [
+              "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix"
               nixos-hardware.nixosModules.raspberry-pi-4
               ./configuration.nix
               ./base.nix
