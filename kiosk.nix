@@ -17,7 +17,8 @@ let
     done
   '';
 in
-{
+  {
+  services.getty.autologinUser = "kiosk";
   users.users.kiosk = {
     isNormalUser = true;
     password = "changeme";
