@@ -20,15 +20,14 @@
           # more informative?
           x86_64-linux = self.packages.aarch64-linux;
           aarch64-linux = {
-            pi-kiosk-sdImage = (self.nixosConfigurations.pi-kiosk.extendModules {
-              modules = [ "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix" ];
-            }).config.system.build.sdImage;
+            pi-kiosk-sdImage = self.nixosConfigurations.pi-kiosk.config.system.build.sdImage;
           };
         };
         nixosConfigurations = {
           pi-kiosk = nixpkgs.lib.nixosSystem {
             system = "aarch64-linux";
             modules = [
+              "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix"
               nixos-hardware.nixosModules.raspberry-pi-4
               ./configuration.nix
               ./base.nix
