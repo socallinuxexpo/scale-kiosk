@@ -1,7 +1,8 @@
 { pkgs, lib, config, ... }:
 let
   mouseUrl = "https://register.socallinuxexpo.org/reg6/kiosk/";
-  regularUrl = "http://signs.scale.lan/";
+  #regularUrl = "http://signs.scale.lan/";
+  regularUrl = "https://socallinuxexpo.org/";
   kioskProgram = pkgs.writeShellScript "kiosk.sh" ''
     cd /home/kiosk
     # account for ALT+F4 closing window in wayland
@@ -12,7 +13,7 @@ let
         # required cross-origin-iframe and popup blocking flags due to iframe
         MOZ_ENABLE_WAYLAND=1 ${lib.getExe pkgs.firefox} --kiosk --private-window ${mouseUrl}
       else
-        ${lib.getExe pkgs.chromium} --ozone-platform=wayland --incognito --start-maximized --in-process-gpu --kiosk ${regularUrl}
+        MOZ_ENABLE_WAYLAND=1 ${lib.getExe pkgs.firefox} --kiosk --private-window ${regularUrl}
       fi
     done
   '';
