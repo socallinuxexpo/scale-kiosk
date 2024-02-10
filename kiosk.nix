@@ -21,5 +21,8 @@ in
     enable = true;
     user = "kiosk";
     program = kioskProgram;
+    environment = {
+      WLR_LIBINPUT_NO_DEVICES = "1"; # boot up even if no mouse/keyboard connected
+    };
   };
 }
