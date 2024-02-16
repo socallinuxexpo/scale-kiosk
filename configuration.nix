@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   imports = [ ./kiosk.nix ];
-  environment.systemPackages = with pkgs; [ vim git ];
+  # default to stateVersion for current lock
+  system.stateVersion = config.system.nixos.version;
   services.openssh.enable = true;
   networking.hostName = "pi";
   users = {
