@@ -31,4 +31,18 @@ in
       WLR_LIBINPUT_NO_DEVICES = "1"; # boot up even if no mouse/keyboard connected
     };
   };
+
+  programs.firefox = {
+    enable = true;
+    policies = {
+      PopupBlocking = false;
+    };
+    preferences = {
+      "security.mixed_content.block_active_content" = false;
+      "browser.shell.checkDefaultBrowser" = false;
+      "app.update.auto" = false;
+      "extensions.pocket.enabled" = false;
+      "signon.rememberSignons" = false; # dont prompt to save credentials to browser
+    };
+  };
 }
