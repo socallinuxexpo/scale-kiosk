@@ -12,17 +12,36 @@
       ];
       systems = [
         "aarch64-linux"
+        "x86_64-linux"
       ];
-      flake = { ... }: {
-        packages = {
-          # We only ever want to build for arm64, even when the host is
-          # x86_64-linux, maybe we should show a trace when building in order to be
-          # more informative?
-          x86_64-linux = self.packages.aarch64-linux;
-          aarch64-linux = {
-            pi-kiosk-sdImage = self.nixosConfigurations.pi-kiosk.config.system.build.sdImage;
-          };
+      perSystem = { system, pkgs, ... }: {
+        apps.vm = let
+          vmScript = (nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = [
+              ./configuration.nix
+              ./base.nix
+            ];
+          }).config.system.build.vm;
+        in {
+          type = "app";
+          program = builtins.toPath (pkgs.writeShellScript "stateless-kiosk-vm" ''
+            TMPDIR=$(mktemp -d)
+            function cleanup {
+              rm -rf "$TMPDIR"
+            }
+            trap cleanup 0
+            cd $TMPDIR
+            ${pkgs.lib.getExe vmScript}
+          '');
         };
+      };
+      flake = { ... }: {
+        # We only ever want to build for arm64, even when the host is
+        # x86_64-linux, maybe we should show a trace when building in order to be
+        # more informative?
+        packages.x86_64-linux.pi-kiosk-sdImage = self.packages.aarch64-linux.pi-kiosk-sdImage;
+        packages.aarch64-linux.pi-kiosk-sdImage = self.nixosConfigurations.pi-kiosk.config.system.build.sdImage;
         nixosConfigurations = {
           pi-kiosk = nixpkgs.lib.nixosSystem {
             system = "aarch64-linux";
