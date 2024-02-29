@@ -7,7 +7,7 @@ let
     # account for ALT+F4 closing window in wayland
     while true
     do
-      if [ -e /sys/class/input/mouse0 ]
+      if [ -e /sys/class/input/mouse1 ]
       then
         # required cross-origin-iframe and popup blocking flags due to iframe
         ${lib.getExe pkgs.chromium} --blink-settings=allowScriptsToCloseWindows=true --ozone-platform=wayland --user-agent="SCALE:1" --disable-popup-blocking --disable-throttle-non-visible-cross-origin-iframes --incognito --start-maximized --disable-gpu --kiosk ${mouseUrl}
