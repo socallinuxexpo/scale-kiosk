@@ -1,6 +1,9 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, modulesPath, ... }:
 {
-  imports = [ ./kiosk.nix ];
+  imports = [
+    ./kiosk.nix
+    "${modulesPath}/profiles/minimal.nix"
+  ];
   # default to stateVersion for current lock
   system.stateVersion = config.system.nixos.version;
   services.openssh.enable = true;
@@ -18,4 +21,6 @@
   };
   # This causes an overlay which causes a lot of rebuilding
   environment.noXlibs = lib.mkForce false;
+
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
 }

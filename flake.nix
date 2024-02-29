@@ -41,12 +41,18 @@
         # x86_64-linux, maybe we should show a trace when building in order to be
         # more informative?
         packages.x86_64-linux.pi-kiosk-sdImage = self.packages.aarch64-linux.pi-kiosk-sdImage;
-        packages.aarch64-linux.pi-kiosk-sdImage = self.nixosConfigurations.pi-kiosk.config.system.build.sdImage;
+        packages.aarch64-linux.pi-kiosk-sdImage = (self.nixosConfigurations.pi-kiosk.extendModules {
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            {
+              disabledModules = [ "profiles/base.nix" ];
+            }
+          ];
+        }).config.system.build.sdImage;
         nixosConfigurations = {
           pi-kiosk = nixpkgs.lib.nixosSystem {
             system = "aarch64-linux";
             modules = [
-              "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix"
               nixos-hardware.nixosModules.raspberry-pi-4
               ./configuration.nix
               ./base.nix
