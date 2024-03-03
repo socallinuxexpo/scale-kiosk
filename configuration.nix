@@ -23,4 +23,12 @@
   environment.noXlibs = lib.mkForce false;
 
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
+
+  # Sync via NTP before allowing multi-user.target
+  # https://discourse.nixos.org/t/systemd-wait-for-timesync/15808/2
+  systemd = {
+    additionalUpstreamSystemUnits = [ "systemd-time-wait-sync.service" ];
+    services.systemd-time-wait-sync.wantedBy = [ "multi-user.target" ];
+    services."cage-tty1".after = [ "network.target" "time-sync.target" ];
+  };
 }
