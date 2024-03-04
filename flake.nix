@@ -21,6 +21,8 @@
             modules = [
               ./configuration.nix
               ./base.nix
+              # enable timesyncd in the VM
+              { services.timesyncd.enable = pkgs.lib.mkForce true; }
             ];
           }).config.system.build.vm;
         in {
@@ -32,7 +34,9 @@
             }
             trap cleanup 0
             cd $TMPDIR
-            ${pkgs.lib.getExe vmScript}
+            ${pkgs.lib.getExe vmScript} \
+              # screw up the clock so that a lack of RTC be emulated in VM
+              -rtc base=1970-01-01T12:12:12,clock=vm,driftfix=slew
           '');
         };
       };
