@@ -31,4 +31,8 @@
     services.systemd-time-wait-sync.wantedBy = [ "multi-user.target" ];
     services."cage-tty1".after = [ "network.target" "time-sync.target" ];
   };
+
+  # Reduces closure size
+  nixpkgs.flake.setFlakeRegistry = false;
+  nixpkgs.flake.setNixPath = false;
 }
