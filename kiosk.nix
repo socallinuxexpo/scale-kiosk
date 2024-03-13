@@ -3,6 +3,7 @@ let
   mouseUrl = "https://register.socallinuxexpo.org/reg6/?kiosk=1";
   regularUrl = "http://signs.scale.lan/";
   kioskProgram = pkgs.writeShellScript "kiosk.sh" ''
+    LAST_OCTET=$(ip -j route | ${lib.getExe pkgs.jq} '.[] | select(.dst == "default") | .prefsrc | split(".") | .[-1]' -r)
     cd /home/kiosk
     # account for ALT+F4 closing window in wayland
     while true
@@ -10,7 +11,7 @@ let
       if [ -e /sys/class/input/mouse1 ]
       then
         # required cross-origin-iframe and popup blocking flags due to iframe
-        ${lib.getExe pkgs.chromium} --blink-settings=allowScriptsToCloseWindows=true --ozone-platform=wayland --user-agent="SCALE:1" --disable-popup-blocking --disable-throttle-non-visible-cross-origin-iframes --incognito --start-maximized --disable-gpu --kiosk ${mouseUrl}
+        ${lib.getExe pkgs.chromium} --blink-settings=allowScriptsToCloseWindows=true --ozone-platform=wayland --user-agent="SCALE:$LAST_OCTET" --disable-popup-blocking --disable-throttle-non-visible-cross-origin-iframes --incognito --start-maximized --disable-gpu --kiosk ${mouseUrl}
       else
         ${lib.getExe pkgs.chromium} --ozone-platform=wayland --incognito --start-maximized --disable-gpu --kiosk ${regularUrl}
       fi
