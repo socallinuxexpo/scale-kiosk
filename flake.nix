@@ -35,8 +35,8 @@
             }
             trap cleanup 0
             cd $TMPDIR
+            # screw up the clock so that a lack of RTC be emulated in VM
             ${pkgs.lib.getExe vmScript} \
-              # screw up the clock so that a lack of RTC be emulated in VM
               -rtc base=1970-01-01T12:12:12,clock=vm,driftfix=slew
           '');
         };
