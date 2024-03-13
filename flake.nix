@@ -21,6 +21,7 @@
             modules = [
               ./configuration.nix
               ./base.nix
+              ./prometheus.nix
               # enable timesyncd in the VM
               { services.timesyncd.enable = pkgs.lib.mkForce true; }
             ];
@@ -60,6 +61,7 @@
               nixos-hardware.nixosModules.raspberry-pi-4
               ./configuration.nix
               ./base.nix
+              ./prometheus.nix
             ];
           };
         };
