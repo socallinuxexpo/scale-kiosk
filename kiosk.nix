@@ -34,7 +34,6 @@ in
   };
   users.users.kiosk = {
     isNormalUser = true;
-    password = "changeme";
     extraGroups = [ "wheel" ];
   };
   services.cage = {
