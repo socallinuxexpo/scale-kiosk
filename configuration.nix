@@ -71,6 +71,7 @@
   environment.noXlibs = lib.mkForce false;
 
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
+  boot.kernelParams = [ "cma=128M" ];
 
   # Sync via NTP before allowing multi-user.target
   # https://discourse.nixos.org/t/systemd-wait-for-timesync/15808/2
