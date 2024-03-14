@@ -16,6 +16,8 @@
     };
   };
 
+  hardware.opengl.enable = true;
+
   networking.hostName = "pi";
   users.users = {
     rob = {
