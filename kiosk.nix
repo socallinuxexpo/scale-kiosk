@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, ... }:
 let
   mouseUrl = "https://register.socallinuxexpo.org/reg6/?kiosk=1";
   regularUrl = "http://signs.scale.lan/";
