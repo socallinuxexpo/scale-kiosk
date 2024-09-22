@@ -30,6 +30,9 @@ in
         settings = {
           main = {
             control = "noop";
+            alt = "noop";
+            leftalt = "noop";
+            rightalt = "noop";
           };
         };
       };
