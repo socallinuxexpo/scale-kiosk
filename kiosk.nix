@@ -21,6 +21,9 @@ let
   '';
 in
 {
+  imports = [
+    ./kanshi.nix
+  ];
   # Disable CTRL keys
   services.keyd = {
     enable = true;
