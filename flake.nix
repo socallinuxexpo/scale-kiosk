@@ -38,7 +38,8 @@
             # screw up the clock so that a lack of RTC be emulated in VM
             ${pkgs.lib.getExe vmScript} \
               -serial stdio \
-              -rtc base=1970-01-01T12:12:12,clock=vm,driftfix=slew
+              -rtc base=1970-01-01T12:12:12,clock=vm,driftfix=slew \
+              "$@"
           '');
         };
       };
