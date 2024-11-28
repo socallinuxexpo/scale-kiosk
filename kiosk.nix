@@ -13,9 +13,9 @@ let
       if [ -e /sys/class/input/mouse1 ]
       then
         # required cross-origin-iframe and popup blocking flags due to iframe
-        ${lib.getExe pkgs.ungoogled-chromium} --force-device-scale-factor=2.0 --blink-settings=allowScriptsToCloseWindows=true --user-agent="SCALE:$LAST_OCTET" --disable-popup-blocking --disable-throttle-non-visible-cross-origin-iframes --incognito --start-maximized --disable-gpu --kiosk ${mouseUrl}
+        ${lib.getExe pkgs.ungoogled-chromium} --blink-settings=allowScriptsToCloseWindows=true --user-agent="SCALE:$LAST_OCTET" --disable-popup-blocking --disable-throttle-non-visible-cross-origin-iframes --incognito --start-maximized --disable-gpu --kiosk ${mouseUrl}
       else
-        ${lib.getExe pkgs.ungoogled-chromium} --force-device-scale-factor=2.0 --incognito --start-maximized --disable-gpu --kiosk ${regularUrl}
+        ${lib.getExe pkgs.ungoogled-chromium} --incognito --start-maximized --disable-gpu --kiosk ${regularUrl}
       fi
     done
   '';
