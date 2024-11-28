@@ -50,6 +50,12 @@
       extraGroups = [ "wheel" ];
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEqPnzsYPKyURdnUpZx1nt9RFQjaz9q7m5wh525Crsho" "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCtTtJZOyg/9/hbP6IuCyjpA1L0SqMR6wWOU8uJaoa3YlN2sqUkIGne1WYc+4jR+0F2uusDQ1Beb2a9Z0XGxP7nkEIGc5ontC6R/ZUHGf8axz5LXGk9VESR6sMdOjeotSYWwcuj6kPqa0XNXy0nG08dhe8Y+QkjiDQRhjMka4OOmcjMtRAjJyfhROEMpFM18M4Fh3+8j36TatzQQWO6wZ408dQYIc6ShleVfVCvEn5fZ0lm3BRe0UW3wfNs9qupk89VrfUWAEYqvh2uSz9SJBEkGAumreu6ASq7rfPC2DyI60vIT4uaRsqSzfQyT9o1n4v8WmgUKp4kRfZ+T8jWFoUXhj82+2WCCxUlq8D1SRcXDI1OQhHNmH7okorw7TgKJPdM0f96tvgdviH3As6xP/GdnEup8HL0nqKSX8dbRggS9xvmr5SKqGN8QSrclJ+cCsUOWRctgGasf7m+Q6XFNF/8LG6wbqBxxw7TLMLkjVdppHAFoewoBau5cRKGQ++G+BU=" ];
     };
+    rramirez = {
+      isNormalUser = true;
+      uid = 2010;
+      extraGroups = [ "wheel" ];
+      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAkQS5ohCDizq24WfDgP/dEOonD/0WfrI0EAZFCyS0Ea" ];
+    };
 
   };
 
