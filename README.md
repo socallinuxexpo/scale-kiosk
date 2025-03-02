@@ -63,3 +63,14 @@ arm64 machine for every package/derivation that needs to be compiled. Binfmt is
 a kernel feature that will allows programs like QEMU to be span up whenever any
 program tries to spawn a process for a foreign architecture.
 
+## Testing
+
+Verify the resolution(s) 1080p (1.0), 1440p(1.33), 2160p(2.0), 4320p(4.0) using vmTests:
+
+```
+nix run .#vm -- -display sdl,gl=off -device qxl-vga,xres=7680,yres=4320,vgamem_mb=512 &
+nix run .#vm -- -display sdl,gl=off -device qxl-vga,xres=3840,yres=2160,vgamem_mb=512 &
+nix run .#vm -- -display sdl,gl=off -device qxl-vga,xres=2560,yres=1440,vgamem_mb=512 &
+nix run .#vm -- -display sdl,gl=off -device qxl-vga,xres=1920,yres=1080,vgamem_mb=512 &
+```
+> This confirms is working as expected
