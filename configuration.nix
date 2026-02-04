@@ -90,6 +90,8 @@
   nixpkgs.flake.setFlakeRegistry = false;
   nixpkgs.flake.setNixPath = false;
 
+  time.timeZone = "America/Los_Angeles";
+
   zramSwap = {
     enable = true;
     algorithm = "zstd";
