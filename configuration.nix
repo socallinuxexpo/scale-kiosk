@@ -2,6 +2,7 @@
 {
   imports = [
     ./kiosk.nix
+    ./go-signs.nix
     "${modulesPath}/profiles/minimal.nix"
   ];
   # default to stateVersion for current lock
