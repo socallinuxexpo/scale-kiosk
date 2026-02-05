@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 let
   mouseUrl = "https://register.socallinuxexpo.org/reg6/?kiosk=1";
-  regularUrl = "http://signs.scale.lan/";
+  regularUrl = "http://127.0.0.1:2017";
   # using electron should be preferable, but in practice it has some
   # quirks that make using chromium better
   kioskProgram = pkgs.writeShellScript "kiosk.sh" ''
@@ -13,7 +13,7 @@ let
       if [ -e /sys/class/input/mouse1 ]
       then
         # required cross-origin-iframe and popup blocking flags due to iframe
-        ${lib.getExe pkgs.ungoogled-chromium} --blink-settings=allowScriptsToCloseWindows=true --user-agent="SCALE:$LAST_OCTET" --disable-popup-blocking --disable-throttle-non-visible-cross-origin-iframes --incognito --start-maximized --disable-gpu --kiosk ${mouseUrl}
+        ${lib.getExe pkgs.ungoogled-chromium} --blink-settings=allowScriptsToCloseWindows=true --user-agent="SCALE:$LAST_OCTET" --disable-popup-blocking --disable-throttle-non-visible-cross-origin-iframes --incognito --start-maximized --disable-gpu --kiosk --app='${mouseUrl}'
       else
         ${lib.getExe pkgs.ungoogled-chromium} --incognito --start-maximized --disable-gpu --kiosk ${regularUrl}
       fi

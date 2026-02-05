@@ -2,10 +2,11 @@
 {
   imports = [
     ./kiosk.nix
+    ./go-signs.nix
     "${modulesPath}/profiles/minimal.nix"
   ];
   # default to stateVersion for current lock
-  system.stateVersion = config.system.nixos.version;
+  system.stateVersion = config.system.nixos.release;
 
   services.openssh = {
     enable = true;
@@ -73,8 +74,6 @@
     experimental-features = lib.mkDefault "nix-command flakes";
     trusted-users = [ "root" "@wheel" ];
   };
-  # This causes an overlay which causes a lot of rebuilding
-  environment.noXlibs = lib.mkForce false;
 
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
   boot.kernelParams = [ "cma=256M" ];
@@ -90,6 +89,8 @@
   # Reduces closure size
   nixpkgs.flake.setFlakeRegistry = false;
   nixpkgs.flake.setNixPath = false;
+
+  time.timeZone = "America/Los_Angeles";
 
   zramSwap = {
     enable = true;

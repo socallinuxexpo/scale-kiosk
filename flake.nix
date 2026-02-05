@@ -4,8 +4,9 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-shell.url = "github:Mic92/nixos-shell";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    go-signs.url = "github:kylerisse/go-signs";
   };
-  outputs = { self, nixpkgs, nixos-hardware, nixos-shell, flake-parts }@inputs:
+  outputs = { self, nixpkgs, nixos-hardware, nixos-shell, flake-parts, go-signs }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         ./flake-modules/binfmt-sdk.nix
@@ -17,6 +18,7 @@
       perSystem = { system, pkgs, ... }: {
         apps.vm = let
           vmScript = (nixpkgs.lib.nixosSystem {
+            specialArgs = { inherit inputs; };
             inherit system;
             modules = [
               ./configuration.nix
@@ -59,6 +61,7 @@
         nixosConfigurations = {
           pi-kiosk = nixpkgs.lib.nixosSystem {
             system = "aarch64-linux";
+            specialArgs = { inherit inputs; };
             modules = [
               nixos-hardware.nixosModules.raspberry-pi-4
               ./configuration.nix
