@@ -100,4 +100,19 @@
 
   # Allows us to calculate the v6 addresses from mac addresses (EUI-64)
   networking.tempAddresses = "disabled";
+
+  systemd.network = {
+    enable = true;
+    networks = {
+      "10-end0" = {
+        name = "e*0*";
+        enable = true;
+        networkConfig = {
+          LLDP = true;
+          EmitLLDP = true;
+          IPv6PrivacyExtensions = false;
+        };
+      };
+    };
+  };
 }
