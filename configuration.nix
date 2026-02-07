@@ -97,4 +97,7 @@
     algorithm = "zstd";
     memoryPercent = 90;
   };
+
+  # Allows us to calculate the v6 addresses from mac addresses (EUI-64)
+  networking.tempAddresses = "disabled";
 }
