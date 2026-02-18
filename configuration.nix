@@ -57,6 +57,16 @@
       extraGroups = [ "wheel" ];
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAkQS5ohCDizq24WfDgP/dEOonD/0WfrI0EAZFCyS0Ea" ];
     };
+    kylerisse = {
+      isNormalUser = true;
+      uid = 2011;
+      extraGroups = [ "wheel" ];
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPcTYYr/TGH4vRCaY4WU4Qc7RlzzBOHv2XYxGwCzV+fg"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKX8NM1OQECwhNTQE0qAm422uq9L0i0Y/hvPPc4tHIOX"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDwETBVGk/A/3TZgmB/lVy7KZdY62ywNODx3HJk698PP"
+      ];
+    };
 
   };
 
@@ -68,7 +78,7 @@
   };
 
   users.mutableUsers = false;
-  users.extraUsers.root.hashedPassword = "$6$3Hm/K5fbR3UEMK6H$3aaegtdwvejGk9Bk0ttN5bNJn4z2Yt6LWXD3nGI7.44Pbm7A1TpKuxG9XQLwsj7M9NEk8eB5Exg0qVRV//6br/";
+  users.extraUsers.root.hashedPassword = "$6$nixtheplanet$7rjv9t572/PWzMmsGvuTEcVhghAuJ91s.8Bc0Kli4PuEoMupqoyQGq7qPmdlpui.Q1l9yjA5UzsMWJgTkhMbf1";
 
   nix.settings = {
     experimental-features = lib.mkDefault "nix-command flakes";
