@@ -23,11 +23,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1770829675,
-        "narHash": "sha256-WpywdXbgxs9Pza0yID/qtuuaZAXcSMLOVa1rFGE/fqM=",
+        "lastModified": 1771448694,
+        "narHash": "sha256-Pyv/zNVhAZgl/bPKQZTkrvDiirQG0YcRWOtatGo3FqE=",
         "owner": "kylerisse",
         "repo": "go-signs",
-        "rev": "fa9e7b52e0c158873a2735c0f3f85c26df00ac76",
+        "rev": "1273cf37e92f322726bfb45f94ffe605df715da6",
         "type": "github"
       },
       "original": {
