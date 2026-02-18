@@ -57,6 +57,16 @@
       extraGroups = [ "wheel" ];
       openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAkQS5ohCDizq24WfDgP/dEOonD/0WfrI0EAZFCyS0Ea" ];
     };
+    kylerisse = {
+      isNormalUser = true;
+      uid = 2011;
+      extraGroups = [ "wheel" ];
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPcTYYr/TGH4vRCaY4WU4Qc7RlzzBOHv2XYxGwCzV+fg"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKX8NM1OQECwhNTQE0qAm422uq9L0i0Y/hvPPc4tHIOX"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDwETBVGk/A/3TZgmB/lVy7KZdY62ywNODx3HJk698PP"
+      ];
+    };
 
   };
 
