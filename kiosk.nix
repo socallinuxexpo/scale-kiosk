@@ -15,7 +15,7 @@ let
         # required cross-origin-iframe and popup blocking flags due to iframe
         ${lib.getExe pkgs.ungoogled-chromium} --blink-settings=allowScriptsToCloseWindows=true --user-agent="SCALE:$LAST_OCTET" --disable-popup-blocking --disable-throttle-non-visible-cross-origin-iframes --incognito --start-maximized --disable-gpu --kiosk --app='${mouseUrl}'
       else
-        ${lib.getExe pkgs.ungoogled-chromium} --incognito --start-maximized --disable-gpu --kiosk ${regularUrl}
+        ${lib.getExe pkgs.ungoogled-chromium} --incognito --start-maximized --disable-gpu --kiosk --app='${regularUrl}'
       fi
     done
   '';
