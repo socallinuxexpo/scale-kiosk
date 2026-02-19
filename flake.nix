@@ -15,34 +15,58 @@
         "aarch64-linux"
         "x86_64-linux"
       ];
-      perSystem = { system, pkgs, ... }: {
-        apps.vm = let
-          vmScript = (nixpkgs.lib.nixosSystem {
-            specialArgs = { inherit inputs; };
-            inherit system;
-            modules = [
-              ./configuration.nix
-              ./base.nix
-              ./prometheus.nix
-              # enable timesyncd in the VM
-              { services.timesyncd.enable = pkgs.lib.mkForce true; }
-            ];
-          }).config.system.build.vm;
-        in {
-          type = "app";
-          program = builtins.toPath (pkgs.writeShellScript "stateless-kiosk-vm" ''
-            TMPDIR=$(mktemp -d)
-            function cleanup {
-              rm -rf "$TMPDIR"
-            }
-            trap cleanup 0
-            cd $TMPDIR
-            # screw up the clock so that a lack of RTC be emulated in VM
-            ${pkgs.lib.getExe vmScript} \
-              -serial stdio \
-              -rtc base=1970-01-01T12:12:12,clock=vm,driftfix=slew \
-              "$@"
-          '');
+      perSystem = { system, pkgs, ... }: let
+        makeVmScript = config: (nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; };
+          inherit system;
+          modules = [
+            { inherit config; }
+            ./configuration.nix
+            ./base.nix
+            ./prometheus.nix
+            ({ config, ... }: {
+              services.timesyncd.enable = pkgs.lib.mkForce true;
+              system.build.vmScript = ((pkgs.writeShellScriptBin "stateless-kiosk-vm" ''
+                TMPDIR=$(mktemp -d)
+                function cleanup {
+                  rm -rf "$TMPDIR"
+                }
+                trap cleanup 0
+                cd $TMPDIR
+                # screw up the clock so that a lack of RTC be emulated in VM
+                ${pkgs.lib.getExe config.system.build.vm} \
+                  -serial stdio \
+                  -rtc base=1970-01-01T12:12:12,clock=vm,driftfix=slew \
+                  "$@"
+              ''));
+            })
+          ];
+        }).config.system.build.vmScript;
+
+      in {
+        # Makes `nix run` work with .#vm .#vm.nomouse or .#vm.simulator
+        legacyPackages = rec {
+          vm = (makeVmScript {}).overrideAttrs {
+            passthru = {
+              # runs all variants of the VM defined in passthru, in a subshell at once
+              all = pkgs.writeShellScriptBin "run-all-vms" ''
+                ( ${pkgs.lib.getExe vm} &
+                  ${pkgs.lib.concatStringsSep " & \n" (
+                    map (v: pkgs.lib.getExe v) (builtins.attrValues (builtins.removeAttrs vm.passthru ["all"]))
+                  )} &
+                  wait )
+              '';
+              # Removes the mouse from /sys/class/input/mouse1, by blacklisting
+              nomouse = makeVmScript {
+                boot.blacklistedKernelModules = [ "hid-generic" "i8042" ];
+              };
+              # Same as nomouse, but overrides go-signs to use the simulator, json
+              nomouse-with-simulator = makeVmScript {
+                boot.blacklistedKernelModules = [ "hid-generic" "i8042" ];
+                services.go-signs.simulator = true;
+              };
+            };
+          };
         };
       };
       flake = { ... }: {
