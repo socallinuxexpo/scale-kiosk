@@ -17,6 +17,8 @@
     };
   };
 
+  services.go-signs.enable = true;
+
   hardware.graphics.enable = true;
 
   networking.hostName = "pi";
