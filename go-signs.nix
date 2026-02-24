@@ -24,6 +24,7 @@ in
       wantedBy = [ "multi-user.target" ];
       before = [ "graphical.target" ];
       after = [ "network.target" "network-online.target" "time-sync.target" ];
+      wants = [ "network-online.target" ];
       serviceConfig = {
         Type = "simple";
         DynamicUser = true;
