@@ -7,13 +7,18 @@ let
   kioskProgram = pkgs.writeShellScript "kiosk.sh" ''
     LAST_OCTET=$(ip -j route | ${lib.getExe pkgs.jq} '.[] | select(.dst == "default") | .prefsrc | split(".") | .[-1]' -r)
     cd /home/kiosk
+    if [ ! -f /home/kiosk/kiosk.id ]; then
+      KIOSK_ID=$(tr -dc 'a-zA-Z' < /dev/urandom | head -c 10)
+      echo "KIOSK_ID=$KIOSK_ID" > /home/kiosk/kiosk.id
+    fi
+    source /home/kiosk/kiosk.id
     # account for ALT+F4 closing window in wayland
     while true
     do
       if [ -e /sys/class/input/mouse1 ]
       then
         # required cross-origin-iframe and popup blocking flags due to iframe
-        ${lib.getExe pkgs.ungoogled-chromium} --blink-settings=allowScriptsToCloseWindows=true --user-agent="sKaleX3:$LAST_OCTET" --disable-popup-blocking --disable-throttle-non-visible-cross-origin-iframes --incognito --start-maximized --disable-gpu --kiosk --app='${mouseUrl}'
+        ${lib.getExe pkgs.ungoogled-chromium} --blink-settings=allowScriptsToCloseWindows=true --user-agent="$KIOSK_ID:$LAST_OCTET" --disable-popup-blocking --disable-throttle-non-visible-cross-origin-iframes --incognito --start-maximized --disable-gpu --kiosk --app='${mouseUrl}'
       else
         ${lib.getExe pkgs.ungoogled-chromium} --incognito --start-maximized --disable-gpu --kiosk --app='${regularUrl}'
       fi
