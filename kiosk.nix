@@ -1,6 +1,6 @@
 { pkgs, lib, ... }:
 let
-  mouseUrl = "https://register.socallinuxexpo.org/reg6/?kiosk=1";
+  mouseUrl = "https://register.socallinuxexpo.org/reg23/kiosk/";
   regularUrl = "http://127.0.0.1:2017";
   # using electron should be preferable, but in practice it has some
   # quirks that make using chromium better
