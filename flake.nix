@@ -4,7 +4,7 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-shell.url = "github:Mic92/nixos-shell";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    go-signs.url = "github:kylerisse/go-signs";
+    go-signs.url = "github:kylerisse/go-signs?ref=0.2.0";
   };
   outputs = { self, nixpkgs, nixos-hardware, nixos-shell, flake-parts, go-signs }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
