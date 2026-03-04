@@ -1,3 +1,8 @@
+# Monitoring kiosk top-level configuration.
+# Shared infrastructure (users, SSH, networking, NTP, kernel, zram, sudo, nix settings)
+# is duplicated from configuration.nix. Keep both files in sync when changing shared config.
+# Note: base.nix and prometheus.nix are imported at the flake level, not here.
+# See docs/tdd/monitoring-kiosk.md for design rationale (Option B: parallel configuration).
 {
   pkgs,
   lib,
@@ -7,8 +12,7 @@
 }:
 {
   imports = [
-    ./kiosk.nix
-    ./go-signs.nix
+    ./kiosk-monitoring.nix
     "${modulesPath}/profiles/minimal.nix"
   ];
   # default to stateVersion for current lock
@@ -23,11 +27,9 @@
     };
   };
 
-  services.go-signs.enable = true;
-
   hardware.graphics.enable = true;
 
-  networking.hostName = "pi";
+  networking.hostName = "pi-monitoring";
   users.users = {
     rob = {
       isNormalUser = true;

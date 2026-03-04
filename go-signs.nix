@@ -1,4 +1,10 @@
-{ lib, config, pkgs, inputs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   cfg = config.services.go-signs;
 in
@@ -23,7 +29,11 @@ in
       description = "SCaLE go-signs server";
       wantedBy = [ "multi-user.target" ];
       before = [ "graphical.target" ];
-      after = [ "network.target" "network-online.target" "time-sync.target" ];
+      after = [
+        "network.target"
+        "network-online.target"
+        "time-sync.target"
+      ];
       wants = [ "network-online.target" ];
       serviceConfig = {
         Type = "simple";
