@@ -4,9 +4,9 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixos-shell.url = "github:Mic92/nixos-shell";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    go-signs.url = "github:kylerisse/go-signs?ref=0.2.0";
+    scale-signs.url = "github:socallinuxexpo/scale-signs?ref=0.2.0";
   };
-  outputs = { self, nixpkgs, nixos-hardware, nixos-shell, flake-parts, go-signs }@inputs:
+  outputs = { self, nixpkgs, nixos-hardware, nixos-shell, flake-parts, scale-signs }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         ./flake-modules/binfmt-sdk.nix
@@ -60,10 +60,10 @@
               nomouse = makeVmScript {
                 boot.blacklistedKernelModules = [ "hid-generic" "i8042" ];
               };
-              # Same as nomouse, but overrides go-signs to use the simulator, json
+              # Same as nomouse, but overrides scale-signs to use the simulator, json
               nomouse-with-simulator = makeVmScript {
                 boot.blacklistedKernelModules = [ "hid-generic" "i8042" ];
-                services.go-signs.simulator = true;
+                services.scale-signs.simulator = true;
               };
             };
           };

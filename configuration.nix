@@ -2,7 +2,7 @@
 {
   imports = [
     ./kiosk.nix
-    ./go-signs.nix
+    ./scale-signs.nix
     "${modulesPath}/profiles/minimal.nix"
   ];
   # default to stateVersion for current lock
@@ -17,7 +17,7 @@
     };
   };
 
-  services.go-signs.enable = true;
+  services.scale-signs.enable = true;
 
   hardware.graphics.enable = true;
 
